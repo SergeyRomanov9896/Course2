@@ -1,0 +1,12 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "mypy-type-checker.path": [
+        "${workspaceFolder}/.venv/Scripts/mypy.exe"
+    ],
+    "mypy-type-checker.args": [
+        "--config-file",
+        "${workspaceFolder}/pyproject.toml"
+    ]
+}

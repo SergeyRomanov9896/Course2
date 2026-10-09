@@ -1,0 +1,81 @@
+[project]
+name = "course2"
+version = "0.1.0"
+description = "Описание проекта"
+authors = [{ name = "SergeyRomanov9896", email = "automag2016@mail.ru" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["requests>=2.34.2,<3.0.0"]
+
+[tool.poetry]
+packages = [{ include = "course2", from = "src" }]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+lint = ["mypy>=2.4.0,<3.0.0", "flake8>=7.4.1,<8.0.0", "ruff>=0.16.10,<0.17.0"]
+dev = ["pytest>=9.1.1,<10.0.0", "pytest-cov>=7.1.0,<8.0.0"]
+
+# === 🔧 RUFF: Основные настройки ===
+[tool.ruff]
+target-version = "py312"
+line-length = 119
+exclude = [
+	".bzr",
+	".direnv",
+	".eggs",
+	".git",
+	".git-rewrite",
+	".hg",
+	".mypy_cache",
+	".nox",
+	".pants.d",
+	".pytype",
+	".ruff_cache",
+	".svn",
+	".tox",
+	".venv",
+	"__pypackages__",
+	"__pycache__",
+	"_build",
+	"buck-out",
+	"build",
+	"dist",
+	"node_modules",
+	"venv",
+	"migrations",
+]
+
+# === 📋 RUFF: Правила линтинга ===
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "UP", "C90"]
+ignore = ["E501", "B008"]
+fixable = ["ALL"]
+unfixable = []
+
+# === 📦 RUFF: Сортировка импортов ===
+[tool.ruff.lint.isort]
+known-first-party = ["course2"]
+
+# === 🎨 RUFF: Форматирование кода ===
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# === 🔍 MYPY: Статическая проверка типов ===
+[tool.mypy]
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_return_any = true
+exclude = ['(^|/)venv/', '(^|/)\.venv/', '(^|/)__pycache__/']
+mypy_path = "src"
+explicit_package_bases = true
+
+# === 🧪 PYTEST: Настройки тестирования ===
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
