@@ -55,7 +55,6 @@ class JSONStorage(BaseDataStorage):
         self._aeroplanes: list[Aeroplane] = []  # Внутреннее хранилище в памяти
         self.load()  # При создании сразу загружаем данные из файла, если он есть
 
-
     def add_aeroplane(self, aeroplane: Aeroplane) -> None:
         """Добавляет самолет в список в памяти."""
         # Проверка на дубликаты по позывному
@@ -101,7 +100,6 @@ class JSONStorage(BaseDataStorage):
 
         return result
 
-
     def delete_aeroplane(self, criteria: dict) -> None:
         """
         Удаляет самолет по критериям.
@@ -112,7 +110,6 @@ class JSONStorage(BaseDataStorage):
             return
 
         initial_count = len(self._aeroplanes)
-
 
         self._aeroplanes = [p for p in self._aeroplanes if not self._matches_criteria(p, criteria)]
 
@@ -140,7 +137,6 @@ class JSONStorage(BaseDataStorage):
             else:
                 return False  # Если атрибута нет, критерий не выполнен
         return True
-
 
     def save(self) -> None:
         """Сохраняет список самолетов в JSON-файл."""
