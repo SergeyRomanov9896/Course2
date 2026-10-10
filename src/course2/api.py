@@ -16,7 +16,7 @@ class BaseAPIAdapter(ABC):
         pass
 
 
-class APIAdapter(BaseAPIAdapter):  # Позже здесь будет (BaseAPIAdapter)
+class APIAdapter(BaseAPIAdapter):
     def __init__(
         self,
         nominatim_url: str = "https://nominatim.openstreetmap.org/search",
@@ -25,7 +25,6 @@ class APIAdapter(BaseAPIAdapter):  # Позже здесь будет (BaseAPIAd
         self.nominatim_url = nominatim_url
         self.opensky_url = opensky_url
 
-    # --- МЕТОД 1: Только координаты ---
     def get_country_bbox(self, country: str) -> list[str] | None:
         """
         Получает координаты (bounding box) страны.
@@ -44,10 +43,9 @@ class APIAdapter(BaseAPIAdapter):  # Позже здесь будет (BaseAPIAd
 
         if len(data) == 0:
             return None
-        # Если всё хорошо, возвращаем boundingbox
+
         return data[0].get("boundingbox")
 
-    # --- МЕТОД 2: Только самолеты по координатам ---
     def get_aeroplanes_by_bbox(self, bbox: list[str]) -> dict | None:
         """
         Получает данные о самолетах в заданном прямоугольнике координат.
@@ -79,19 +77,16 @@ class APIAdapter(BaseAPIAdapter):  # Позже здесь будет (BaseAPIAd
 
         return data
 
-    # --- МЕТОД 3: Удобный метод "все в одном" ---
     def get_aeroplanes(self, country: str) -> dict | None:
         """
         Получает самолеты по названию страны.
         Использует два метода выше.
         """
-        # 1. Сначала получаем координаты
+
         bbox = self.get_country_bbox(country)
 
-        # 2. Проверяем, нашли ли мы страну
         if bbox is None:
             print(f"Страна '{country}' не найдена!")
             return None
 
-        # 3. Если координаты есть, ищем самолеты
         return self.get_aeroplanes_by_bbox(bbox)

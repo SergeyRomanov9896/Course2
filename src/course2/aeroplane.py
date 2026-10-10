@@ -1,16 +1,9 @@
 class Aeroplane:
     def __init__(self, callsign: str, country: str, velocity: float | None, altitude: float | None) -> None:
-        # ВАЖНО: Мы присваиваем значения через self.xxx, а не self._xxx.
-        # Это специально, чтобы сразу сработали наши сеттеры (@xxx.setter)
-        # и данные прошли валидацию ПРЯМО В МОМЕНТ создания объекта.
         self.callsign = callsign
         self.country = country
         self.velocity = velocity
         self.altitude = altitude
-
-    # ==========================================
-    # 1. ИНКАПСУЛЯЦИЯ И ВАЛИДАЦИЯ (Properties)
-    # ==========================================
 
     @property
     def callsign(self) -> str:
@@ -38,7 +31,6 @@ class Aeroplane:
 
     @velocity.setter
     def velocity(self, value: float | None) -> None:
-        # Если API вернул None (датчик не сработал), считаем скорость равной 0
         if value is None:
             self._velocity = 0.0
             return
@@ -56,7 +48,6 @@ class Aeroplane:
 
     @altitude.setter
     def altitude(self, value: float | None) -> None:
-        # Аналогично скорости: None превращаем в 0.0
         if value is None:
             self._altitude = 0.0
             return
@@ -68,17 +59,13 @@ class Aeroplane:
 
         self._altitude = float(value)
 
-    # ==========================================
-    # 2. МАГИЧЕСКИЕ МЕТОДЫ СРАВНЕНИЯ (Dunder methods)
-    # ==========================================
-
     def __lt__(self, other: "Aeroplane") -> bool:
         """
         Меньше чем (<). Используется функцией sorted() по умолчанию.
         Сравниваем по высоте полета (для задачи "Топ N по высоте").
         """
         if not isinstance(other, Aeroplane):
-            return NotImplemented  # Говорим Python: "Я не умею сравнивать себя с этим типом"
+            return NotImplemented
         return self.altitude < other.altitude
 
     def __gt__(self, other: "Aeroplane") -> bool:
@@ -95,10 +82,6 @@ class Aeroplane:
         if not isinstance(other, Aeroplane):
             return NotImplemented
         return self.callsign == other.callsign
-
-    # ==========================================
-    # 3. ДОПОЛНИТЕЛЬНЫЕ МЕТОДЫ
-    # ==========================================
 
     def is_faster_than(self, other: "Aeroplane") -> bool:
         """
